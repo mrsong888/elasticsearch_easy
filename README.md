@@ -1,1 +1,1 @@
-# elasticsearch_easy
+# 对elasticsearch API的封装
