@@ -63,7 +63,7 @@ class EsOperator(object):
         else:
             raise Exist('index or doc_type exist')
 
-    def mappings_update(self, index, doc_type, fields):
+    def _mappings_update(self, index, doc_type, fields):
         '''
         :param index(string): index name
         :param doc_type(string): document name
@@ -84,7 +84,7 @@ class EsOperator(object):
     def cat_indices(self):
         return self.es.cat.indices()
 
-    def sigle_doc_create(self, index, doc_type, id, body):
+    def _sigle_doc_create(self, index, doc_type, id, body):
         '''
         :param index(string): index name
         :param doc_type(string): document name
@@ -103,7 +103,7 @@ class EsOperator(object):
     def multi_doc_create(self):
         pass
 
-    def sigle_doc_update(self, index, doc_type, id, body):
+    def _sigle_doc_update(self, index, doc_type, id, body):
         '''
         :param index(string):
         :param doc_type(string):
