@@ -106,6 +106,27 @@ class EsOperator(six.with_metaclass(CatchException, object)):
             return True
         return False
 
+    def es_get_mappings(self, index, doc_type):
+        '''
+        :param index(string): index name
+        :param doc_type(string): document type
+        :return(dict): mappings data
+        '''
+        return self.es.indices.get_mapping(index=index, doc_type=doc_type)
+
+    def es_get_field_mappings(self, index, doc_type, fields):
+        '''
+        :param index(string):
+        :param doc_type(string):
+        :param fields(list):[field1, field2]
+        :return(dict): field map type {filed: type}
+        '''
+        field_type_dict = {}
+        result = self.es.indices.get_field_mapping(index=index, doc_type=doc_type, fields=fields)[index]['mappings'][doc_type]
+        for field, val in result.items():
+            field_type_dict[field] = val['mapping'][field]['type']
+        return field_type_dict
+
     def cat_indices(self):
         return self.es.cat.indices()
 
@@ -269,3 +290,4 @@ es = EsOperator(hosts='101.251.243.242')
 # print es.es_get_doc_counts(index='info', doc_type='person_info')
 # print es.index_create(index='info5', doc_type='person_info5', fields={'name': 'text', 'age': 'integer'})
 # print es.es_mappings_update(index='info5', doc_type='person_info5', fields={'address': 'text'})
+print es.es_get_field_mappings(index='info', doc_type='person_info', fields=['age', 'name'])
